@@ -1,0 +1,69 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  test:
+    name: Run Unit & Concurrency Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install Dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Run Biome Linter & Format Check
+        run: bun run lint
+
+      - name: Run TypeScript Typecheck
+        run: bun run typecheck
+
+      - name: Run Unit & E2E Test Suite
+        run: bun test
+
+      - name: Run Anti-Race Condition Stress Tests
+        run: bun run test:stress
+
+  docker-build:
+    name: Validate Docker Build
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build Docker Image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          target: runner
+          push: false
+          tags: authservice:latest
+
+  deploy:
+    name: Continuous Deployment (Render)
+    runs-on: ubuntu-latest
+    needs: [test, docker-build]
+    if: (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master') && github.event_name == 'push'
+    steps:
+      - name: Trigger Render Deploy Hook
+        if: env.RENDER_DEPLOY_HOOK_URL != ''
+        env:
+          RENDER_DEPLOY_HOOK_URL: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+        run: |
+          echo "🚀 Triggering Render Deploy Hook..."
+          curl -fsS -X POST "$RENDER_DEPLOY_HOOK_URL"
+          echo "✅ Render deployment triggered successfully!"

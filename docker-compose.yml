@@ -1,0 +1,38 @@
+services:
+  authservice:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: runner
+    container_name: authservice
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - BASE_URL=${BASE_URL:-http://localhost:3000}
+      - DB_PATH=/app/data/authservice.db
+      - JWT_ISSUER=${JWT_ISSUER:-authservice}
+      - JWT_AUDIENCE=${JWT_AUDIENCE:-authservice-clients}
+      - ACCESS_TOKEN_TTL=${ACCESS_TOKEN_TTL:-900}
+      - REFRESH_TOKEN_TTL_DAYS=${REFRESH_TOKEN_TTL_DAYS:-14}
+      - MAGIC_LINK_TTL_MINUTES=${MAGIC_LINK_TTL_MINUTES:-15}
+      - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID:-mock-google-client-id.apps.googleusercontent.com}
+      - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET:-mock-google-client-secret}
+      - DEBUG_EXPOSE_TOKEN=${DEBUG_EXPOSE_TOKEN:-true}
+    volumes:
+      - ./data:/app/data
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: 512M
+        reservations:
+          memory: 64M
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:3000/.well-known/jwks.json || exit 1"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 5s

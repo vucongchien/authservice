@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AuthService Demo — Magic Link & OAuth</title>
+  <link rel="stylesheet" href="/demo/style.css" />
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <h1>🛡️ AuthService Demo</h1>
+      <p class="subtitle">Minh họa tích hợp Client: Magic Link (100% Passwordless) & Google OAuth</p>
+      <div class="api-config">
+        <label for="apiBase">API Base URL:</label>
+        <input type="text" id="apiBase" value="http://localhost:3000" />
+        <span class="badge" id="serverStatus">Chưa kết nối</span>
+      </div>
+    </header>
+
+    <main class="grid">
+      <!-- CỘT 1: MAGIC LINK FLOW -->
+      <section class="card">
+        <h2>📧 1. Luồng Magic Link</h2>
+        <p class="desc">Đăng nhập không cần mật khẩu. Chỉ nhận <code>POST /verify</code> để chống bot email.</p>
+
+        <!-- Bước 1: Gửi Request -->
+        <div class="form-group">
+          <label for="emailInput">Email đăng nhập:</label>
+          <input type="email" id="emailInput" value="demo-user@example.com" placeholder="name@example.com" />
+          <button type="button" id="btnRequestMagicLink" class="btn btn-primary">Gửi Magic Link</button>
+        </div>
+
+        <!-- Bước 2: Token trả về (Dev Mode) -->
+        <div class="form-group" id="verifyStep">
+          <label for="tokenInput">Token xác thực (Lấy từ email hoặc log console):</label>
+          <input type="text" id="tokenInput" placeholder="Dán raw token vào đây..." />
+          <button type="button" id="btnVerifyMagicLink" class="btn btn-success">Xác thực Token (POST /verify)</button>
+        </div>
+
+        <!-- Log bước Magic Link -->
+        <div class="log-box" id="magicLinkLog">Sẵn sàng. Nhập email và nhấn "Gửi Magic Link".</div>
+      </section>
+
+      <!-- CỘT 2: GOOGLE OAUTH FLOW -->
+      <section class="card">
+        <h2>🌐 2. Luồng Google OAuth 2.1</h2>
+        <p class="desc">Client gửi Google ID Token lên server để tự động Account Linking (1 Email = 1 User ID).</p>
+
+        <div class="form-group">
+          <label for="oauthEmail">Email Google:</label>
+          <input type="email" id="oauthEmail" value="demo-user@example.com" />
+          <button type="button" id="btnMockGoogleLogin" class="btn btn-secondary">Đăng nhập Google (Giả lập ID Token)</button>
+        </div>
+
+        <div class="log-box" id="oauthLog">Nhấn "Đăng nhập Google" để kiểm tra ghép nối tài khoản.</div>
+      </section>
+    </main>
+
+    <!-- KẾT QUẢ ĐĂNG NHẬP & PHIÊN LÀM VIỆC -->
+    <section class="card session-card" id="sessionSection" style="display: none;">
+      <div class="session-header">
+        <h2>🎉 Trạng Thái Đã Đăng Nhập</h2>
+        <button type="button" id="btnLogout" class="btn btn-danger">Đăng Xuất</button>
+      </div>
+
+      <div class="user-info-grid">
+        <div><strong>User ID:</strong> <span id="userId">-</span></div>
+        <div><strong>Email:</strong> <span id="userEmail">-</span></div>
+        <div><strong>Roles:</strong> <span id="userRoles" class="badge badge-role">-</span></div>
+        <div><strong>Tài khoản mới?</strong> <span id="isNewUser">-</span></div>
+      </div>
+
+      <div class="token-details">
+        <label for="accessTokenDisplay">Access Token (RS256 JWT):</label>
+        <textarea id="accessTokenDisplay" readonly rows="2"></textarea>
+
+        <label for="refreshTokenDisplay">Refresh Token (Opaque Hash):</label>
+        <input type="text" id="refreshTokenDisplay" readonly />
+      </div>
+
+      <div class="session-actions">
+        <button type="button" id="btnGetSessions" class="btn btn-outline">Xem Danh Sách Sessions (GET /sessions)</button>
+        <button type="button" id="btnRefreshToken" class="btn btn-outline">Xoay Vòng Token (POST /auth/refresh)</button>
+      </div>
+
+      <div class="log-box" id="sessionLog">Chưa có tương tác phiên.</div>
+    </section>
+  </div>
+
+  <script src="/demo/app.js"></script>
+</body>
+</html>
