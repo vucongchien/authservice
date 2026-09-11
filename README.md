@@ -160,24 +160,10 @@ docker-compose up -d
 
 ---
 
-## 🚀 Triển Khai Lên Render & Tự Động Hóa CD
-
-Dự án cấu hình sẵn **Render Blueprint** ([render.yaml](render.yaml)) và **CD Pipeline** qua GitHub Actions:
-1. **Triển khai 1-Click (Infrastructure as Code)**:
-   - Vào [Render Dashboard](https://dashboard.render.com/) ➔ **New** ➔ **Blueprint**.
-   - Kết nối repository GitHub này. Render sẽ tự động tạo **Web Service (Docker)** và **PostgreSQL Database (Free)** với kết nối `DATABASE_URL` hoàn toàn tự động.
-2. **Continuous Deployment (CD)**:
-   - Workflow [.github/workflows/ci.yml](.github/workflows/ci.yml) tự động chạy linter, typecheck, kiểm thử đồng thời và build Docker.
-   - Thêm secret `RENDER_DEPLOY_HOOK_URL` vào GitHub Repo. Khi push vào nhánh `main`/`master`, CD pipeline sẽ kích hoạt Render triển khai phiên bản mới nhất ngay khi toàn bộ test pass 100%.
-3. **Live Demo Trên Production**:
-   - Truy cập ngay `https://<ten-app>.onrender.com/demo/` để thử nghiệm trực quan luồng Magic Link & Google OAuth.
-
----
-
 ## 🧪 Kiểm Thử
 
 ```bash
-bun test            # Chạy 27 bài test Unit & E2E
+bun test            # Chạy 31 bài test Unit & E2E
 bun run test:stress # Kiểm tra chống Race Condition & Transaction
 bun run lint        # Kiểm tra linter & format với Biome
 ```
