@@ -11,6 +11,9 @@
 </p>
 
 <p align="center">
+  <a href="https://auth-service-hzwg.onrender.com/demo" target="_blank">
+    <img src="https://img.shields.io/badge/🎮%20Live%20Demo-auth--service--hzwg.onrender.com-6366f1?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Live Demo">
+  </a>
   <a href="https://render.com/deploy" target="_blank">
     <img src="https://render.com/images/deploy-to-render-button.svg" alt="Deploy to Render">
   </a>
@@ -120,16 +123,26 @@ Tài liệu Swagger tương tác trực quan có sẵn tại: `http://localhost:
 
 ---
 
+## 🎮 Giao Diện Live Demo Tích Hợp
+
+Trải nghiệm trực quan ngay luồng **100% Passwordless Magic Link** và **Google OAuth 2.1 (Account Linking)**:
+- ☁️ **Live Demo trên Render:** [https://auth-service-hzwg.onrender.com/demo](https://auth-service-hzwg.onrender.com/demo)
+- 📚 **Swagger UI tài liệu API:** [https://auth-service-hzwg.onrender.com/swagger](https://auth-service-hzwg.onrender.com/swagger)
+- 🔑 **JWKS Discovery Endpoint:** [https://auth-service-hzwg.onrender.com/.well-known/jwks.json](https://auth-service-hzwg.onrender.com/.well-known/jwks.json)
+- 🐳 **Chạy cục bộ với Docker:** [http://localhost:3000/demo/](http://localhost:3000/demo/)
+
+---
+
 ## 🚀 Hướng Dẫn Bắt Đầu Nhanh
 
 ### 1. Yêu cầu hệ thống
-- Đã cài đặt [Bun](https://bun.sh/) (phiên bản v1.1 trở lên).
+- Đã cài đặt [Bun](https://bun.sh/) (phiên bản v1.1 trở lên) hoặc [Docker](https://www.docker.com/).
 
 ### 2. Cài đặt & Khởi chạy
 ```bash
 # 1. Clone repository
-git clone https://github.com/your-username/ult-module-service.git
-cd ult-module-service/authservice
+git clone https://github.com/vucongchien/authservice.git
+cd authservice
 
 # 2. Cài đặt dependencies
 bun install
