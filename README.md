@@ -1,12 +1,12 @@
 # 🛡️ AuthService — Ultra-Fast, 100% Passwordless Authentication Microservice
 
 <p align="center">
+  <a href="https://github.com/vucongchien/authservice/actions/workflows/cicd.yml"><img src="https://github.com/vucongchien/authservice/actions/workflows/cicd.yml/badge.svg" alt="CI/CD Pipeline"></a>
   <img src="https://img.shields.io/badge/Runtime-Bun%20v1.4+-black?style=for-the-badge&logo=bun" alt="Bun">
   <img src="https://img.shields.io/badge/Framework-ElysiaJS%20v1.4+-f28b82?style=for-the-badge" alt="ElysiaJS">
   <img src="https://img.shields.io/badge/Architecture-Clean%20Architecture-4285F4?style=for-the-badge" alt="Clean Architecture">
   <img src="https://img.shields.io/badge/Database-SQLite%20%7C%20PostgreSQL-34A853?style=for-the-badge" alt="Database">
-  <img src="https://img.shields.io/badge/Deploy-Render%20Ready-46E3B7?style=for-the-badge&logo=render&logoColor=white" alt="Render">
-  <img src="https://img.shields.io/badge/Docker-~75MB%20Alpine-2496ED?style=for-the-badge&logo=docker" alt="Docker">
+  <img src="https://img.shields.io/badge/Docker-GHCR%20Published-2496ED?style=for-the-badge&logo=docker" alt="Docker">
   <img src="https://img.shields.io/badge/Tests-31%2F31%20Passing-brightgreen?style=for-the-badge" alt="Tests">
 </p>
 
